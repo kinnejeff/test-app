@@ -82,6 +82,8 @@ var app = {
 	document.getElementById("temperature").innerHTML = weatherData.currTemp + ", " + weatherData.maxTemp + ", " +
 	weatherData.minTemp;
 	document.getElementById("forecast").innerHTML = weatherData.forecast;
+
+	alert("Hello...");
     },
     // Bind Event Listeners
     //
