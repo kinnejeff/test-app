@@ -41,43 +41,9 @@ var app = {
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
-	weatherData = getWeather();
-	document.getElementById("temperature").innerHTML = weatherData.currTemp + ", " + weatherData.maxTemp + ", " +
-	weatherData.minTemp;
-	document.getElementById("forecast").innerHTML = weatherData.forecast;
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
 
-	
-        //listeningElement.setAttribute('style', 'display:none;');
-        //receivedElement.setAttribute('style', 'display:block;');
-        //console.log('Received Event: ' + id);
+        console.log('Received Event: ' + id);
     }
 };
-
-
-function getHtml(url) {
-    if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-	    xmlhttp=new XMLHttpRequest();
-	}
-    else
-	{// code for IE6, IE5
-	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}    
-    xmlhttp.open("GET",url,false);
-    xmlhttp.send();
-    xmlDoc=xmlhttp.responseXML;
-
-    return xmlDoc;
-}
-
-function getWeather() {
-    var data = {};
-    var xmlDoc = getHtml("http://forecast.weather.gov/MapClick.php?lat=39.47040&lon=-87.3835&unit=0&lg=english&FcstType=dwml");
-
-    data.minTemp = xmlDoc.getElementsByTagName("temperature")[0].childNodes[1].nodeValue;
-    data.maxTemp = xmlDoc.getElementsByTagName("temperature")[1].childNodes[1].nodeValue;
-    data.currTemp = xmlDoc.getElementsByTagName("temperature")[2].childNodes[0].nodeValue;
-    data.forecast = xmlDoc.getElementsByTagName("text").nodeValue;
-
-    return data;
-}
