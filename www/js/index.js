@@ -66,7 +66,23 @@ function geolocationSuccess(position) {
           'Speed: '             + position.coords.speed             + '\n' +
           'Timestamp: '         + position.timestamp                + '\n');
 
-    document.getElementById("distance").innerHTML = position.coords.latitude + ", " + position.coords.longitude;
+    //
+    var rootlat = 39.472046;
+    var rootlong = -87.407752;
+    
+
+    var R = 6371; // km
+    var dLat = (rootlat-position.coords.latitude)*3.14159/180;
+    var dLon = (rootlong-position.coords.longitude)*3.14159/180;
+    var lat1 = position.coords.latitude*3.14159/180;
+    var lat2 = rootlat*3.14159/180;
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c;
+
+    document.getElementById("distance").innerHTML = d + " km";
 }
 
 function geolocationError(error) {
@@ -83,7 +99,7 @@ var app = {
 	weatherData.minTemp;
 	document.getElementById("forecast").innerHTML = weatherData.forecast;
 
-	alert("Hello...");
+	//alert("Hello...");
     },
     // Bind Event Listeners
     //
@@ -101,7 +117,7 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-	alert("Cheers!");
+	//alert("Cheers!");
 	if (!navigator) alert("No navigator");
 	else if (!navigator.geolocation) alert("No navigator.geolocation");
 	else if (!navigator.geolocation.getCurrentPosition) alert("No navigator.geolocation.getCurrentPosition");
