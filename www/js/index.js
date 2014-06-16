@@ -103,6 +103,7 @@ var app = {
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
+	alert("Cheers!");
 	if (!navigator) alert("No navigator");
 	else if (!navigator.geolocation) alert("No navigator.geolocation");
 	else if (!navigator.geolocation.getCurrentPosition) alert("No navigator.geolocation.getCurrentPosition");
