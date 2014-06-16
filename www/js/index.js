@@ -34,14 +34,24 @@ function getHtml(url) {
     return xmlDoc;
 }
 
+function getXmlValue(v) {
+    var x = v;
+    for(var i=0; i < x.length; i++) {
+	if (x[i].nodeName == "value") {
+	    return x[i].textContent;
+	}
+    }
+    return "";
+}
+
 function getWeather() {
     var data = {};
     var xmlDoc = getHtml("http://forecast.weather.gov/MapClick.php?lat=39.47040&lon=-87.3835&unit=0&lg=english&FcstType=dwml");
 
-    data.minTemp = xmlDoc.getElementsByTagName("temperature")[0].childNodes[1].nodeValue;
-    data.maxTemp = xmlDoc.getElementsByTagName("temperature")[1].childNodes[1].nodeValue;
-    data.currTemp = xmlDoc.getElementsByTagName("temperature")[2].childNodes[0].nodeValue;
-    data.forecast = xmlDoc.getElementsByTagName("text").nodeValue;
+    data.maxTemp = getXmlValue(xmlDoc.getElementsByTagName("temperature")[0].childNodes);
+    data.minTemp = getXmlValue(xmlDoc.getElementsByTagName("temperature")[1].childNodes);
+    data.currTemp = getXmlValue(xmlDoc.getElementsByTagName("temperature")[2].childNodes);
+    data.forecast = xmlDoc.getElementsByTagName("text")[0].textContent;
 
     return data;
 }
