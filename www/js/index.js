@@ -101,10 +101,6 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
 	alert("Cheers!");
 	if (!navigator) alert("No navigator");
 	else if (!navigator.geolocation) alert("No navigator.geolocation");
@@ -112,10 +108,6 @@ var app = {
 	else navigator.geolocation.getCurrentPosition(geolocationSuccess,
 						 geolocationError,
                                                  {enableHighAccuracy:true});
-
-        //listeningElement.setAttribute('style', 'display:none;');
-        //receivedElement.setAttribute('style', 'display:block;');
-        //console.log('Received Event: ' + id);
     }
 };
 
