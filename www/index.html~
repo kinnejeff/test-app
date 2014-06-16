@@ -30,7 +30,7 @@
         <div class="app">
             <h1>Indiana State CS</h1>
 
-	    <p><b>Temp (current, max, min): </b> <span id="temperaturen"></span></p>
+	    <p><b>Temp (current, max, min): </b> <span id="temperature"></span></p>
 	    <p><b>Forecast: </b> <span id="forecast"></span></p>
 
 	    <p><b>Distance to Root Hall: </b> <span id="distance"></span></p>
