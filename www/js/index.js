@@ -56,6 +56,23 @@ function getWeather() {
     return data;
 }
 
+function geolocationSuccess(position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
+          'Longitude: '         + position.coords.longitude         + '\n' +
+          'Altitude: '          + position.coords.altitude          + '\n' +
+          'Accuracy: '          + position.coords.accuracy          + '\n' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+          'Heading: '           + position.coords.heading           + '\n' +
+          'Speed: '             + position.coords.speed             + '\n' +
+          'Timestamp: '         + position.timestamp                + '\n');
+
+    document.getElementById("distance").innerHTML = position.coords.latitude + ", " + position.coords.longitude;
+}
+
+function geolocationError(error) {
+    document.getElementById("distance").innerHTML = "GPS error" + error.code + " " + error.message;
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -85,6 +102,10 @@ var app = {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
+
+	navigator.geolocation.getCurrentPosition(geolocationSuccess,
+						 geolocationError,
+                                                 {enableHighAccuracy:true});
 
         //listeningElement.setAttribute('style', 'display:none;');
         //receivedElement.setAttribute('style', 'display:block;');

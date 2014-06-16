@@ -16,10 +16,55 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+function getHtml(url) {
+    if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+	    xmlhttp=new XMLHttpRequest();
+	}
+    else
+	{// code for IE6, IE5
+	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}    
+    xmlhttp.open("GET",url,false);
+    xmlhttp.send();
+    xmlDoc=xmlhttp.responseXML;
+
+    return xmlDoc;
+}
+
+function getXmlValue(v) {
+    var x = v;
+    for(var i=0; i < x.length; i++) {
+	if (x[i].nodeName == "value") {
+	    return x[i].textContent;
+	}
+    }
+    return "";
+}
+
+function getWeather() {
+    var data = {};
+    var xmlDoc = getHtml("http://forecast.weather.gov/MapClick.php?lat=39.47040&lon=-87.3835&unit=0&lg=english&FcstType=dwml");
+
+    data.maxTemp = getXmlValue(xmlDoc.getElementsByTagName("temperature")[0].childNodes);
+    data.minTemp = getXmlValue(xmlDoc.getElementsByTagName("temperature")[1].childNodes);
+    data.currTemp = getXmlValue(xmlDoc.getElementsByTagName("temperature")[2].childNodes);
+    data.forecast = xmlDoc.getElementsByTagName("text")[0].textContent;
+
+    return data;
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+
+	weatherData = getWeather();
+	document.getElementById("temperature").innerHTML = weatherData.currTemp + ", " + weatherData.maxTemp + ", " +
+	weatherData.minTemp;
+	document.getElementById("forecast").innerHTML = weatherData.forecast;
     },
     // Bind Event Listeners
     //
@@ -41,9 +86,9 @@ var app = {
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+        //listeningElement.setAttribute('style', 'display:none;');
+        //receivedElement.setAttribute('style', 'display:block;');
+        //console.log('Received Event: ' + id);
     }
 };
+
