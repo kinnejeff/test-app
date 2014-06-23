@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>8 Queens Puzzle</title>
+<style>
+.square_black {
+  background-color: #333333;
+  color:#eeeeee;
+}
+.square_white {
+  background-color: #eeeeee;
+  color:#333333;
+}
+.square_black, .square_white {
+  height: 50px;
+  width: 50px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  font-size:40px;
+  font-family:Times, serif;
+}
+.chess_td {
+  padding: 0px;
+  margin: 0px;
+  border-spacing: 0px;
+  border: 0px;
+  
+}
+</style>
+
+<script type="text/javascript">
+function isAttacked(row, col) {
+  for(var r=0; r < dim; r++) {
+    for(var c=0; c < dim; c++) {
+      var s = document.getElementById("button_"+r+"_"+c).innerHTML;
+      if (s != "Q") continue;
+      if (row == r || col == c) return true;
+      if (row-col==r-c && row-col >= 0 ||
+          col-row==c-r && col-row >= 0) return true;
+      if (row-(dim-1-col)==r-(dim-1-c) && row-(dim-1-col) >= 0 ||
+          (dim-1-col)-row==(dim-1-c)-r && (dim-1-col)-row >= 0) return true;
+    }
+  }
+  return false;
+}
+
+function shadeAttacked() {
+  for(var r = 0; r < dim; r++) {
+    for(var c = 0; c < dim; c++) {
+      var b = document.getElementById("button_"+r+"_"+c);
+      if (isAttacked(r,c)) {
+        if ( (r+c) % 2 == 0)
+          b.style.backgroundColor = "#3333aa";
+        else
+          b.style.backgroundColor = "#8888ff";
+      }
+      else {
+        if ( (r+c) % 2 == 0)
+          b.style.backgroundColor = "#333333";
+        else
+          b.style.backgroundColor = "#eeeeee";
+      }
+    }  
+  }
+}
+
+function toggleQueen(me) {
+  if (me.innerHTML == "Q") 
+    me.innerHTML = "";
+  else {
+    var row = parseInt(me.id[7]); 
+    var col = parseInt(me.id[9]); 
+    if (isAttacked(row,col)) return;
+
+    me.innerHTML = "Q";
+  }
+  shadeAttacked();
+}
+
+</script>
+</head>
+<body>
+
+<center>
+<b>Can you place <a href="http://en.wikipedia.org/wiki/Eight_queens_puzzle">
+8 queens</a> on the board,<br>
+with none "attacking" each other?<br>
+Click to place/remove queens.</b>
+
+<table>
+
+<script type="text/javascript">
+
+var dim = 8;
+for(var row=0; row < dim; row++) {
+  document.write("<tr>");
+  for(var col=0; col < dim; col++) {
+    var color;
+    if ( (row+col) %2 == 0)color = "black";
+    else color = "white";
+      document.write("<td class=chess_td><button class='square_"+color+"' ");
+      document.write(" id='button_"+row+"_"+col+"' ");
+      document.write("ondblclick='toggleQueen(this);' ");
+      document.write("onclick='toggleQueen(this);'></button></td>");
+  }
+  document.write("</tr>");
+}
+
+document.write("</tr>");
+
+</script>
+
+</table>
+</center>
+
+</body>
+</html>
